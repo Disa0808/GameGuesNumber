@@ -27,6 +27,7 @@ function GameData(numGame){
                           this.win = true;
                           message = `Поздравляем, вы угадали. Было загадано число ${this.computerNumber}.`;
                           writeLogCurrentGame(this.numGame,this.counter,message);
+                          showRandomEl();
                           gameHistory.push({
                                             gameNumber: this.numGame,
                                             gameResult: this.win
@@ -35,8 +36,11 @@ function GameData(numGame){
                           };                      
   this.gameChain =[];
 }
-/*contain history of all games*/
+
+
 var gameData = new GameData(numberGame);
+
+/*contain history of all games*/
 var gameHistory = [];
 
 var tableLogCurrentGame = createTableResults()
@@ -63,8 +67,8 @@ function checkNumber(){
       alertSuccsess.innerText = message;
       alertSuccsess.style.display = 'block';
       alertWarning.style.display = 'none';          
-      numberGame++;
       confirm('Вы угадали, хотите продолжить?');
+      numberGame++;
       gameData = new GameData(numberGame);
     }else{
       alertWarning.innerText = message;
@@ -98,11 +102,29 @@ function writeLogCurrentGame(gameNumber,n,text){
   tableLogCurrentGame.appendChild(tr);  
 }
 
+function showRandomEl(){
+  var elements = [].slice.call(document.getElementsByClassName('square'));
+  var visibleDivs = elements.filter(function(item) {  
+                                                  if (item.classList.contains('fill')){
+                                                    return item;
+                                                    }                                                      
+                                                  }  
+                                                  );
+  if (visibleDivs.length > 0){
+    visibleDivs[Math.round(Math.random()*(visibleDivs.length - 1))].classList.remove('fill');
+    return true;
+  }else{
+   return false;
+  }
+
+}
+  
+
 
 function createTableResults(){
   var tableRes =document.createElement('table');
   tableRes.setAttribute('border',1);
-  tableRes.style.marginTop = '20px';
+  tableRes.style.margin = '20';
   var trHead =  document.createElement('tr');
   var thgameNumber = document.createElement('th');
   thgameNumber.innerHTML = 'Игра №';      

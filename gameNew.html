@@ -8,13 +8,16 @@
   <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <form action="" name="game" class="formc">
-    <input type="number" name="userNumber"><br><br>
-    <div class="alert alert-success" id="alertSuccsess" role="alert"></div>
-    <div class="alert alert-warning" id="alertWarning" role="alert"></div>
-    <a href="#" onclick="checkNumber()" name="ok" class="btn btn-primary">OK</a>
-  </form>
-  
+  <div class="f1">
+    <div>
+      <form action="" name="game" class="formc">
+        <input type="number" name="userNumber">
+        <a href="#" onclick="checkNumber()" name="ok" class="btn btn-primary">OK</a>
+        <br><br>
+        <div class="alert alert-success" id="alertSuccsess" role="alert"></div>
+        <div class="alert alert-warning" id="alertWarning" role="alert"></div>
+      </form>
+  </div>
   <div class="image">
     <div class="square fill" id ="sq1" weight="1"></div>
     <div class="square fill" id ="sq2" weight="2"></div>
@@ -26,7 +29,7 @@
     <div class="square fill" id ="sq8" weight="2"></div>
     <div class="square fill" id ="sq9" weight="1"></div>
   </div>
-
+</div>
   <script type="text/javascript" src="js/script.js"></script>
   
 </body>
