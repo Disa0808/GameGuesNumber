@@ -1,0 +1,28 @@
+form {
+  width:300px;
+}
+
+.image {
+        width:300px;
+        height:300px;  
+        background-image: url("http://www.allpethousesitters.net.au/files/2012/08/cat-300x300.jpg");
+  }
+
+  .square{
+    width:100px;
+    height:100px;
+    
+    float:left;
+  }
+
+  .fill{
+    background-color: black;
+  }
+
+  #alertSuccsess {
+    display: none;
+  }
+
+    #alertWarning {
+    display: none;
+  }
