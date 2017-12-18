@@ -105,10 +105,10 @@ function writeLogCurrentGame(gameNumber,n,text){
 function showRandomEl(){
   var elements = [].slice.call(document.getElementsByClassName('square'));
   var visibleDivs = elements.filter(function(item) {  
-                                                  if (item.classList.contains('fill')){
-                                                    return item;
-                                                    }                                                      
-                                                  }  
+                                                      if (item.classList.contains('fill')){
+                                                        return item;
+                                                      }                                                      
+                                                    }  
                                                   );
   if (visibleDivs.length > 0){
     visibleDivs[Math.round(Math.random()*(visibleDivs.length - 1))].classList.remove('fill');
