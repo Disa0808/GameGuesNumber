@@ -1,5 +1,11 @@
 /*JS game logic*/
 
+var modesActions = {
+  '1':showRandomEl,
+  '2':showRandomEl,
+  '3':showRandomEl
+};
+
 function GameData(numGame){
   this.numGame = numGame;
   this.min = 0;
@@ -23,13 +29,14 @@ function GameData(numGame){
                           this.win = true;
                           message = `Поздравляем, вы угадали. Было загадано число ${this.computerNumber}.`;
                           writeLogCurrentGame(this.numGame,this.counter,message);
-                          showRandomEl();  
+                          modesActions[curMode]();  
                           return message;
                           };                      
   this.gameChain =[];
 }
 var numberGame = 1;
 var gameData = new GameData(numberGame);
+var curMode;
 console.log(gameData.computerNumber);
 
 /*contain history of all games*/
@@ -149,7 +156,7 @@ function start(mode){
   mainMenu.style.display = 'none';
   tableLogCurrentGame.style.display = '';
   fieldGame.style.display = '';
-
+  curMode = mode;
   mainMenu.classList.remove('btn-group-vertical');
 
 }
