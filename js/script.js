@@ -1,90 +1,111 @@
 /*JS game logic*/
-var numberGame = 1;
 
 function GameData(numGame){
   this.numGame = numGame;
   this.min = 0;
   this.max = 1000;
   this.count = 5;
-  this.lostCount = 5;
   this.counter = 1;
   this.computerNumber = Math.round(Math.random()*1000);
   this.win = false;
   this.lowOrHi = function(userNumber){
-                          this.lostCount--;
-                          if (userNumber < this.computerNumber){
-                            message = `Число ${userNumber} меньше загаданного. Осталось ${this.lostCount} попыток.`;
+                          if (!guessField.value){
+                            message = 'Поле не должно быть пустым!!! Но пыпытку засчитываем :)';
+                          }else if (userNumber < this.computerNumber){
+                            message = `Число ${userNumber} меньше загаданного. Осталось ${this.count - this.counter} попыток.`;
                           }else{
-                            message = `Число ${userNumber} больше загаданного. Осталось ${this.lostCount} попыток.`;
+                            message = `Число ${userNumber} больше загаданного. Осталось ${this.count - this.counter} попыток.`;
                           }
                           writeLogCurrentGame(this.numGame,this.counter,message);
                           return message;
                         };
   this.equal = function(){
-                          this.lostCount--;
                           this.win = true;
                           message = `Поздравляем, вы угадали. Было загадано число ${this.computerNumber}.`;
                           writeLogCurrentGame(this.numGame,this.counter,message);
-                          showRandomEl();
-                          gameHistory.push({
-                                            gameNumber: this.numGame,
-                                            gameResult: this.win
-                                          });      
+                          showRandomEl();  
                           return message;
                           };                      
   this.gameChain =[];
 }
-
-
+var numberGame = 1;
 var gameData = new GameData(numberGame);
+console.log(gameData.computerNumber);
 
 /*contain history of all games*/
 var gameHistory = [];
-
+var fieldGame = document.getElementById('f1');
 var tableLogCurrentGame = createTableResults()
-document.body.appendChild(tableLogCurrentGame);
-var alertSuccsess = document.getElementById('alertSuccsess');
-var alertWarning = document.getElementById('alertWarning');  
+var alert = document.getElementById('alert');
+var guesses = document.getElementById('guesses');
+var checkButton = document.getElementById('check');
+var continueBtn = document.getElementById('continueBtn');
+var guessField = document.getElementById('userNumberField');
+var roundLabel = document.getElementById('round');
+var mainMenu = document.getElementById('mainMenu');
 
+
+fieldGame.style.display = 'none';
+tableLogCurrentGame.style.display = 'none';
+document.body.appendChild(tableLogCurrentGame);
+roundLabel.innerText = `Раунд ${numberGame}`;
+roundLabel.style.display = 'block';
 
 function checkNumber(){
   var userNumber = +document.forms.game.userNumber.value;    
-  var error = false;
   var message;
-  if (gameData.lostCount > 0){
+  if (gameData.counter === 1) {
+        guesses.innerHTML = 'Предыдущие значения: ';
+      } 
+
+  guesses.textContent += userNumber + ' ';
+
     if (userNumber == gameData.computerNumber){
-      message = gameData.equal();
-    }else if(userNumber > gameData.computerNumber){
-      message = gameData.lowOrHi(userNumber);
-      error = true;
+      alert.innerHTML = gameData.equal();
+      alert.classList.remove('alert-danger');
+      alert.classList.add('alert-success');
+      alert.style.display = 'block';
+      setGameOver();     
+    }else if( gameData.counter === gameData.count ){
+      alert.classList.remove('alert-success');
+      alert.classList.add('alert-danger');
+      alert.innerHTML = 'Вы проиграли, попытки закончились!';
+      alert.style.display = 'block';      
+      setGameOver(); 
     }else{
-      message = gameData.lowOrHi(userNumber);
-      error = true;
+      alert.innerHTML = gameData.lowOrHi(userNumber);
+      alert.classList.remove('alert-success');
+      alert.classList.add('alert-danger');
+      alert.style.display = 'block';           
+
     }
-    if(!error){
-      alertSuccsess.innerText = message;
-      alertSuccsess.style.display = 'block';
-      alertWarning.style.display = 'none';          
-      confirm('Вы угадали, хотите продолжить?');
-      numberGame++;
-      gameData = new GameData(numberGame);
-    }else{
-      alertWarning.innerText = message;
-      alertWarning.style.display = 'block';
-      alertSuccsess.style.display = 'none';  
-      gameData.counter++;        
-    }
-  }else{
-    gameHistory.push({
-                        gameNumber: gameData.numGame,
-                        gameResult: gameData.win
-                      });  
-    numberGame++;
-    if(confirm('Хотите продолжить?')){
-      gameData = new GameData(numberGame);
-    }
-  }
+    gameData.counter++;
+    guessField.value = '';
 }
+
+function startNextGame(){
+  checkButton.classList.remove('disabled');
+  continueBtn.style.display = 'none';
+  alert.style.display = 'none';
+  numberGame++;
+  roundLabel.innerText = `Раунд ${numberGame}`;
+  gameData = new GameData(numberGame);
+
+};
+
+function setGameOver(){
+  checkButton.classList.add('disabled');
+  continueBtn.style.display = 'block';
+  if (gameData.counter !== gameData.count) {
+    alert.style.display = 'none';
+  }
+  guesses.textContent ='';
+  gameHistory.push({
+                  gameNumber: gameData.numGame,
+                  gameResult: gameData.win,
+                  cntTries  : gameData.counter 
+                });    
+};
 
 function writeLogCurrentGame(gameNumber,n,text){
   var tr = document.createElement('tr');
@@ -108,15 +129,30 @@ function showRandomEl(){
                                                       }                                                      
                                                     }  
                                                   );
-  if (visibleDivs.length > 0){
+  if (visibleDivs.length > 1){
     visibleDivs[Math.round(Math.random()*(visibleDivs.length - 1))].classList.remove('fill');
     return true;
   }else{
-   return false;
+    visibleDivs[Math.round(Math.random()*(visibleDivs.length - 1))].classList.remove('fill');
+    swal({
+        title: 'Поздравляем, вы победили! Наслаждайтесь котиком :)',
+        text: 'Окно автоматически закроется через 5 секунд.',
+        timer: 5000,
+        onOpen: () => {
+          swal.showLoading()
+          }
+        });
   }
-
 }
   
+function start(mode){
+  mainMenu.style.display = 'none';
+  tableLogCurrentGame.style.display = '';
+  fieldGame.style.display = '';
+
+  mainMenu.classList.remove('btn-group-vertical');
+
+}
 
 
 function createTableResults(){

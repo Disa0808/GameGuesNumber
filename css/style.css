@@ -6,6 +6,14 @@ form {
      float:left;
 }
 
+#continueBtn {
+  display:none;
+}
+
+#round{
+  display: none;
+}
+
 .image {
         width:300px;
         height:300px;  
@@ -25,15 +33,8 @@ form {
     background-color: black;
   }
 
-  #alertSuccsess {
-    display: none;
-  }
 
-    #alertWarning {
-    display: none;
-  }
-
-.f1 {
+#f1 {
   margin:10px;
 }
 

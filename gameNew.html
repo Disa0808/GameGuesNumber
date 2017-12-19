@@ -6,17 +6,27 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script> 
   <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" /> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> 
 </head>
 <body>
-  <div class="f1">
+  
+  <div class="btn-group-vertical" id="mainMenu">
+    <a class="btn btn-primary" onclick="start(1)" href="#" role="button">Открываем пазлы</a>
+    <a class="btn btn-primary" onclick="start(2)" href="#" role="button">Играем на призы</a>
+    <a class="btn btn-primary" onclick="start(3)" href="#" role="button">Пазлы для взрослых</a>    
+  </div>
+
+  <div id="f1">
     <div>
       <form action="" name="game" class="formc">
-        <input type="number" name="userNumber">
-        <a href="#" onclick="checkNumber()" name="ok" class="btn btn-primary">Проверить</a>
-        <a href="#" name="continue" class="btn btn-primary">Продолжим?</a>        
+        <label id="round" class="lead"></label>
+        <input type="number" name="userNumber" id="userNumberField">
+        <a href="#" onclick="checkNumber()" name="ok" class="btn btn-primary" id="check">Проверить</a>
+        <a href="#" onclick="startNextGame()" name="next" id="continueBtn" class="btn btn-primary">Следующий раунд</a>    
+        <p id="guesses"></p> 
         <br><br>
-        <div class="alert alert-success" id="alertSuccsess" role="alert"></div>
-        <div class="alert alert-warning" id="alertWarning" role="alert"></div>
+        <div class="alert" id="alert" role="alert"></div>
       </form>
   </div>
   <div class="image">
@@ -30,7 +40,7 @@
     <div class="square fill" id ="sq8" weight="2"></div>
     <div class="square fill" id ="sq9" weight="1"></div>
   </div>
-</div>
+  </div>
   <script type="text/javascript" src="js/script.js"></script>
   
 </body>
