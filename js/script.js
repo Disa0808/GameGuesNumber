@@ -10,18 +10,16 @@ function GameData(numGame){
   this.counter = 1;
   this.computerNumber = Math.round(Math.random()*1000);
   this.win = false;
-  this.less = function(userNumber){
+  this.lowOrHi = function(userNumber){
                           this.lostCount--;
-                          message = `Число ${userNumber} меньше загаданного. Осталось ${this.lostCount} попыток.`;
+                          if (userNumber < this.computerNumber){
+                            message = `Число ${userNumber} меньше загаданного. Осталось ${this.lostCount} попыток.`;
+                          }else{
+                            message = `Число ${userNumber} больше загаданного. Осталось ${this.lostCount} попыток.`;
+                          }
                           writeLogCurrentGame(this.numGame,this.counter,message);
                           return message;
                         };
-  this.more = function (userNumber) {
-                          this.lostCount--;                         
-                          message = `Число ${userNumber} больше загаданного. Осталось ${this.lostCount} попыток.`;
-                          writeLogCurrentGame(this.numGame,this.counter,message);
-                          return message;
-                      }
   this.equal = function(){
                           this.lostCount--;
                           this.win = true;
@@ -57,10 +55,10 @@ function checkNumber(){
     if (userNumber == gameData.computerNumber){
       message = gameData.equal();
     }else if(userNumber > gameData.computerNumber){
-      message = gameData.more(userNumber);
+      message = gameData.lowOrHi(userNumber);
       error = true;
     }else{
-      message = gameData.less(userNumber);
+      message = gameData.lowOrHi(userNumber);
       error = true;
     }
     if(!error){
