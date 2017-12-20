@@ -23,13 +23,13 @@ form {
         margin-left:40px;
   }
 
-  .square{
+.square{
     width:100px;
     height:100px;
     float:left;
   }
 
-  .fill{
+.fill{
     background-color: black;
   }
 
@@ -47,3 +47,30 @@ a{
   margin-top:10px;
 }
 
+
+#giftMode2{
+  width:300px;
+  height:400px;
+  float:left;
+  margin-left: 20px;
+}
+
+img.gift:hover{
+  cursor:pointer;
+}
+
+div.gift {
+    width:50px;
+    height:50px;
+    background-image: url("trofy1.JPG");
+    float:left;
+    margin-right: 20px;
+}
+
+div.giftPrice{
+    float:left;
+    margin-right: 20px;
+    width:70px;
+    height:50px;
+    vertical-align:bottom;
+}
