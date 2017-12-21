@@ -21,6 +21,7 @@
     <div>
       <form action="" name="game" class="formc">
         <label id="round" class="lead"></label>
+        <label class="lead" id="scores"></label>
         <input type="number" name="userNumber" id="userNumberField">
         <a href="#" onclick="checkNumber()" name="ok" class="btn btn-primary" id="check">Проверить</a>
         <a href="#" onclick="startNextGame()" name="next" id="continueBtn" class="btn btn-primary">Следующий раунд</a>    
@@ -29,7 +30,7 @@
         <div class="alert" id="alert" role="alert"></div>
       </form>
   </div>
-  <div class="image">
+  <div class="image" id="giftMode1">
     <div class="square fill" id ="sq1" weight="1"></div>
     <div class="square fill" id ="sq2" weight="2"></div>
     <div class="square fill" id ="sq3" weight="1"></div>
@@ -40,6 +41,29 @@
     <div class="square fill" id ="sq8" weight="2"></div>
     <div class="square fill" id ="sq9" weight="1"></div>
   </div>
+  <div id="giftMode2">
+    <div id="prize1sc">
+      <div  class="giftPrice">1 очко:</div>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="https://assets.mspcdn.net/t_c-desktop-normal,f_auto,q_auto,d_c:noimage.jpg/c/12151-41-1.jpg" class="gift" price="1" id="nokia3310"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="https://cdn2.tu-tu.ru/image/source/2/99c8a5bbea3424eaada78c51f79a8568/" class="gift" price="1" id="ticket"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="http://gallery.ykt.ru/galleries/reklamachat/2013/06/03/1285721_0l.jpg" class="gift" price="1" id="iphone3"></img>
+      <br>
+    </div>
+    <div id="prize2sc">
+      <div class="giftPrice">2 очка:</div>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="http://xcook.info/sites/default/files/resize/products/50-100/svetloe-pivo-1-2-350x263.jpg" class="gift" price="2" id="beer"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="https://m.danmurphys.com.au/media/DM/Product/308x385/27720_0_9999_med_v1_m56577569854560587.png" class="gift" price="2" id="vodka"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="http://images.samsung.com/is/image/samsung/p5/ru/smartphones/galaxy-s8/images/gallery/galaxy-s8_gallery_left_side_black_s4.png?$ORIGIN_PNG$" class="gift" price="2" id="samsung"></img>
+    </div>
+    <div id="prize3sc">
+      <div class="giftPrice">3 очка:</div>      
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="http://www.macdigger.ru/wp-content/uploads/2017/11/913201720152AM_635_iphone_x.jpeg" class="gift" price="3" id="iphonex"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="https://www.masmotors.ru/colors/lada-xray/1.png" class="gift" price="3" id="ladaxray"></img>
+      <img src="css/trofy1.JPG" onclick="giftLogic(this)" lnk="https://media.caranddriver.com/images/16q2/667339/2017-aston-martin-db11-25-cars-worth-waiting-for-feature-car-and-driver-photo-667688-s-450x274.jpg" class="gift" price="3" id="astonmartin"></img>
+    </div>
+  </div>
+
+
   </div>
   <script type="text/javascript" src="js/script.js"></script>
   

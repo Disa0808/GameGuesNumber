@@ -26,6 +26,8 @@ function GameData(numGame){
                           return message;
                         };
   this.equal = function(){
+                          scores++;
+                          scoresLabel.innerHTML = `У вас ${scores} очков.`;  
                           this.win = true;
                           message = `Поздравляем, вы угадали. Было загадано число ${this.computerNumber}.`;
                           writeLogCurrentGame(this.numGame,this.counter,message);
@@ -50,12 +52,16 @@ var continueBtn = document.getElementById('continueBtn');
 var guessField = document.getElementById('userNumberField');
 var roundLabel = document.getElementById('round');
 var mainMenu = document.getElementById('mainMenu');
+var scores = 0;
+var scoresLabel = document.getElementById('scores');
+var recycle = [];
+
 
 
 fieldGame.style.display = 'none';
 tableLogCurrentGame.style.display = 'none';
 document.body.appendChild(tableLogCurrentGame);
-roundLabel.innerText = `Раунд ${numberGame}`;
+roundLabel.innerText = `Раунд ${numberGame} `;
 roundLabel.style.display = 'block';
 
 function checkNumber(){
@@ -103,9 +109,7 @@ function startNextGame(){
 function setGameOver(){
   checkButton.classList.add('disabled');
   continueBtn.style.display = 'block';
-  if (gameData.counter !== gameData.count) {
-    alert.style.display = 'none';
-  }
+  
   guesses.textContent ='';
   gameHistory.push({
                   gameNumber: gameData.numGame,
@@ -157,10 +161,52 @@ function start(mode){
   tableLogCurrentGame.style.display = '';
   fieldGame.style.display = '';
   curMode = mode;
-  mainMenu.classList.remove('btn-group-vertical');
+  startActions[curMode]();
 
 }
 
+
+var startActions ={
+  '1': function(){
+     document.getElementById('giftMode2').style.display = 'none';
+     document.getElementById('giftMode1').style.display = '';
+  },
+  '2':function(){
+     document.getElementById('giftMode1').style.display = 'none';
+     document.getElementById('giftMode2').style.display = '';
+     scoresLabel.innerHTML = `У вас ${scores} очков.`;
+     scoresLabel.style.display = 'block';
+  }
+}
+
+function giftLogic(gift){
+  var price = +gift.getAttribute('price');
+  scores-=price;
+  scoresLabel.innerHTML = `У вас ${scores} очков.`;  
+  recycle.push(gift);
+  swal({
+  title: 'Поздравляем!',
+  text: `Вы получаете  ${dictionaryGifts[gift.getAttribute('id')]}`,
+  imageUrl: gift.getAttribute('lnk'),
+  imageWidth: 400,
+  imageHeight: 200,
+  imageAlt: 'Custom image',
+  animation: false
+})
+}
+
+
+var dictionaryGifts = {
+  'iphone3': 'Iphone3gs',
+  'nokia3310': 'стенобитное орудие',
+  'ticket': 'билет в прекрасное далёко',
+  'beer': 'немного удовольствия',
+  'vodka': 'много удовольствия',
+  'samsung': 'Samsung galaxy S8+',
+  'iphonex': 'Iphone X',
+  'astonmartin': 'новенький Aston Martin DB11',
+  'ladaxray': 'чуто на колесах'
+};
 
 function createTableResults(){
   var tableRes =document.createElement('table');
