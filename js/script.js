@@ -3,7 +3,7 @@
 var modesActions = {
   '1':showRandomEl,
   '2':showRandomEl,
-  '3':showRandomEl
+  '3':showEl
 };
 
 function GameData(numGame){
@@ -155,6 +155,8 @@ function showRandomEl(){
         });
   }
 }
+
+
   
 function start(mode){
   mainMenu.style.display = 'none';
@@ -165,36 +167,87 @@ function start(mode){
 
 }
 
-
+ 
 var startActions ={
   '1': function(){
-     document.getElementById('giftMode2').style.display = 'none';
-     document.getElementById('giftMode1').style.display = '';
+    document.getElementById('giftMode1').style.display = '';
+    document.getElementById('giftMode2').style.display = 'none';
+    document.getElementById('giftMode3').style.display = 'none';     
   },
   '2':function(){
-     document.getElementById('giftMode1').style.display = 'none';
-     document.getElementById('giftMode2').style.display = '';
-     scoresLabel.innerHTML = `У вас ${scores} очков.`;
-     scoresLabel.style.display = 'block';
+    document.getElementById('giftMode1').style.display = 'none';
+    document.getElementById('giftMode2').style.display = '';
+    document.getElementById('giftMode3').style.display = 'none';     
+    scoresLabel.innerHTML = `У вас ${scores} очк${getEndWord(scores)}.`;
+    scoresLabel.style.display = 'block';
+  },
+  '3':function(){
+    document.getElementById('giftMode1').style.display = 'none';
+    document.getElementById('giftMode2').style.display = 'none';
+    document.getElementById('giftMode3').style.display = '';  
+    scoresLabel.innerHTML = `У вас ${scores} очк${getEndWord(scores)}.`;
+    scoresLabel.style.display = 'block';    
+
+    var squaresMode3 = document.querySelectorAll('div.mode3 .fill3'); 
+    for (var i = 0; i < squaresMode3.length; i++){
+      squaresMode3[i].innerHTML = squaresMode3[i].getAttribute('price') + ' очк'+ getEndWord(+squaresMode3[i].getAttribute('price'));
+    }  
+
   }
 }
 
 function giftLogic(gift){
   var price = +gift.getAttribute('price');
-  scores-=price;
-  scoresLabel.innerHTML = `У вас ${scores} очков.`;  
-  recycle.push(gift);
-  swal({
-  title: 'Поздравляем!',
-  text: `Вы получаете  ${dictionaryGifts[gift.getAttribute('id')]}`,
-  imageUrl: gift.getAttribute('lnk'),
-  imageWidth: 400,
-  imageHeight: 200,
-  imageAlt: 'Custom image',
-  animation: false
-})
+  if (scores >= price) {
+    scores-=price;
+    scoresLabel.innerHTML = `У вас ${scores} очк${getEndWord(scores)}.`;  
+    recycle.push(gift);
+    swal({
+    title: 'Поздравляем!',
+    text: `Вы получаете  ${dictionaryGifts[gift.getAttribute('id')]}`,
+    imageUrl: gift.getAttribute('lnk'),
+    imageWidth: 400,
+    imageHeight: 200,
+    imageAlt: 'Custom image',
+    animation: false
+})}else{ 
+  swal(
+      'Ууупс...',
+      'У вас не хватает очков!',
+      'error'
+    );
+}
 }
 
+function showEl(el){
+  if (el) {
+  var price = el.getAttribute('price');
+  if (scores >= price) {
+    if (el.classList.contains('fill3')){
+      scores-=price;
+      scoresLabel.innerHTML = `У вас ${scores} очк${getEndWord(scores)}.`; 
+      el.classList.remove('fill3');
+      el.innerHTML = '';
+    }
+}else{ 
+  swal(
+        'Ууупс...',
+        'У вас не хватает очков!',
+        'error'
+      );
+}
+}
+}
+
+
+function getEndWord(num){
+  if(num == 1){
+    return 'о';
+  }else if(num == 0){
+    return 'ов';
+  }
+  return 'а';
+}
 
 var dictionaryGifts = {
   'iphone3': 'Iphone3gs',
